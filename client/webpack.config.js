@@ -3,32 +3,27 @@ const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
 const { InjectManifest } = require('workbox-webpack-plugin');
 
-// TODO: Add and configure workbox plugins for a service worker and manifest file.
-
-// TODO: Add CSS loaders and babel to webpack.
-
 module.exports = () => {
   return {
     mode: 'development',
     entry: {
-      main: './src/js/index.js',
-      install: './src/js/install.js'
+      main: '../client/src/js/index.js',
+      install: '../client/src/js/install.js'
     },
     output: {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
+      publicPath: '/'
     },
     plugins: [
       new HtmlWebpackPlugin({
         template: './index.html',
         title: 'Just Another Text Editor'
       }),
-       // Injects our custom service worker
-       new InjectManifest({
+      new InjectManifest({
         swSrc: './src-sw.js',
         swDest: 'src-sw.js'
       }),
-      // Creates a manifest.json file
       new WebpackPwaManifest({
         fingerprints: false,
         inject: true,
@@ -37,8 +32,8 @@ module.exports = () => {
         description: 'A simple text editor that works offline',
         background_color: '#225ca3',
         theme_color: '#225ca3',
-        start_url: './',
-        publicPath: './',
+        start_url: '/',
+        publicPath: '/',
         icons: [
           {
             src: path.resolve('src/images/logo.png'),
